@@ -8,3 +8,8 @@
 - Возможность редактирования любой заметки из списка
 - Удаление любой заметки из списка
 - Долговременное хранение заметок с помощью CoreData
+
+![Simulator Screen Shot - iPhone 8 Plus - 2022-02-07 at 00 20 00](https://user-images.githubusercontent.com/91836127/152701917-a805c4ba-39cd-411e-b0ef-357cf9b461b6.png)
+![Simulator Screen Shot - iPhone 8 Plus - 2022-02-07 at 00 20 59](https://user-images.githubusercontent.com/91836127/152701924-e818328d-f252-4a52-9c36-4c3caf7a2597.png)
+![Simulator Screen Shot - iPhone 8 Plus - 2022-02-07 at 00 21 50](https://user-images.githubusercontent.com/91836127/152701935-ad3d9a69-f41d-46ac-b6cb-9e9bee9e2b2b.png)
+![Simulator Screen Shot - iPhone 8 Plus - 2022-02-07 at 00 23 09](https://user-images.githubusercontent.com/91836127/152701939-0398df64-e5a5-4cb0-a090-6d1fad150afc.png)
