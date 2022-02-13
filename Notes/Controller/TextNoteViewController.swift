@@ -37,7 +37,6 @@ class TextNoteViewController: UIViewController, UITextViewDelegate {
     }
     
     func getTextForNote() {
-        print(oldNote)
         if oldNote {
             textNoteTextView.text = titleNote + "\n" + contentNote
         } else {

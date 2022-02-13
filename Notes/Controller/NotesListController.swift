@@ -114,7 +114,6 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
                 editNoteCell(title: titleNote, content: contentNote, date: dateCreateNote, indexPath: indexPath!)
             }
         }
-//        textNoteController?.getTextForNote()
         navigationController?.pushViewController(textNoteController!, animated: true)
     }
 
