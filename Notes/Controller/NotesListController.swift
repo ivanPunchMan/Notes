@@ -10,7 +10,6 @@ import CoreData
 
 class NotesListController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-
     var dataStoreManager = DataStoreManager()
     
     //MARK: - Methods

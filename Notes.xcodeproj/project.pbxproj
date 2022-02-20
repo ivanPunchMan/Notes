@@ -11,6 +11,7 @@
 		849652A627AAF69200D22DFF /* Notes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652A427AAF69200D22DFF /* Notes+CoreDataProperties.swift */; };
 		849652A827AAF92600D22DFF /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652A727AAF92600D22DFF /* DataStoreManager.swift */; };
 		849652AA27AC6D8800D22DFF /* TextNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652A927AC6D8800D22DFF /* TextNoteViewController.swift */; };
+		84DE76CB27BADE3B00818137 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE76CA27BADE3B00818137 /* PopUpView.swift */; };
 		84ECE81127A6804A00FDC2E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ECE81027A6804A00FDC2E7 /* AppDelegate.swift */; };
 		84ECE81327A6804A00FDC2E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ECE81227A6804A00FDC2E7 /* SceneDelegate.swift */; };
 		84ECE81827A6804A00FDC2E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84ECE81627A6804A00FDC2E7 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		849652A427AAF69200D22DFF /* Notes+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notes+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		849652A727AAF92600D22DFF /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 		849652A927AC6D8800D22DFF /* TextNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNoteViewController.swift; sourceTree = "<group>"; };
+		84DE76CA27BADE3B00818137 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		84ECE80D27A6804A00FDC2E7 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84ECE81027A6804A00FDC2E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84ECE81227A6804A00FDC2E7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		84ECE83027A6DB9800FDC2E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84DE76CA27BADE3B00818137 /* PopUpView.swift */,
 				84ECE82E27A6DB2D00FDC2E7 /* NoteCell.swift */,
 			);
 			path = View;
@@ -185,6 +188,7 @@
 				849652A627AAF69200D22DFF /* Notes+CoreDataProperties.swift in Sources */,
 				849652A827AAF92600D22DFF /* DataStoreManager.swift in Sources */,
 				84ECE81127A6804A00FDC2E7 /* AppDelegate.swift in Sources */,
+				84DE76CB27BADE3B00818137 /* PopUpView.swift in Sources */,
 				84ECE81327A6804A00FDC2E7 /* SceneDelegate.swift in Sources */,
 				84ECE82F27A6DB2D00FDC2E7 /* NoteCell.swift in Sources */,
 				849652AA27AC6D8800D22DFF /* TextNoteViewController.swift in Sources */,

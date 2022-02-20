@@ -74,6 +74,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="iAD-Wr-5i5">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="bww-uS-nZI"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="NWn-B2-JnK">
                             <color key="tintColor" red="0.73216170069999997" green="0.6427149177" blue="0.32726746800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -112,6 +113,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6bP-Uo-KqE">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="d1W-vl-k38"/>
                         <barButtonItem key="rightBarButtonItem" title="Сохранить" id="EIx-LH-fFW">
                             <color key="tintColor" red="0.73216170069999997" green="0.6427149177" blue="0.32726746800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>

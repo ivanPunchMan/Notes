@@ -9,7 +9,6 @@ import UIKit
 import CoreData
 
 
-
 class TextNoteViewController: UIViewController, UITextViewDelegate {
     
     private var dataStoreManager = DataStoreManager()
@@ -18,6 +17,14 @@ class TextNoteViewController: UIViewController, UITextViewDelegate {
     var dateNote: Date = Date()
     var indexPath: IndexPath?
     var oldNote = false
+    var window = UIApplication.shared.windows[0]
+    var popUpView: PopUpView!
+    
+    //Для определения сдвига popUpView
+    var keyboardFrameSize: CGRect?
+
+    
+    
     
     @IBOutlet var textNoteTextView: UITextView!
 
@@ -30,10 +37,69 @@ class TextNoteViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerForKeyboardNotification()
         dataStoreManager.configureFetchResultController()
         getTextForNote()
         textNoteTextView.delegate = self
+       
         textNoteTextView.attributedText = configuringAttributedStringFor(text: textNoteTextView.text)
+        if #available(iOS 15.0, *) {
+            textNoteTextView.keyboardDismissMode = .interactive
+        } else {
+            textNoteTextView.keyboardDismissMode = .onDrag
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func loadView() {
+        super.loadView()
+
+        popUpView = PopUpView(frame: .zero)
+        view.addSubview(popUpView)
+        popUpView.setupConstraintsPopUpView()
+ 
+    }
+    
+    func registerForKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        let userInfo = notification.userInfo
+        keyboardFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        
+        let contentShiftUp = (window.frame.height - (popUpView.frame.height * 2) - (keyboardFrameSize?.height ?? 0))
+        textNoteTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: contentShiftUp, right: 0)
+        
+        popUpViewFollowTheKeyboardWhenShow()
+        
+    }
+    
+    func popUpViewFollowTheKeyboardWhenShow() {
+        
+        if #available(iOS 15.0, *) {
+            //Тогда будет работать привязка к Anchor keyboard. Смотри setupConstraintsPopUpView
+        } else {
+            let bottomEdge = window.frame.height - popUpView.frame.height
+            let heightKeyboardAndPopUpView = (keyboardFrameSize?.minY ?? bottomEdge) - popUpView.frame.height
+            popUpView.frame.origin.y = heightKeyboardAndPopUpView
+        }
+    }
+
+    @objc func keyboardWillHide() {
+        
+        if #available(iOS 15.0, *) {
+            //Тогда будет работать привязка к Anchor keyboard. Смотри setupConstraintsPopUpView
+        } else {
+            popUpView.frame.origin.y = window.frame.height - popUpView.frame.height
+        }
     }
     
     func getTextForNote() {
