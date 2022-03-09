@@ -87,10 +87,10 @@
             </objects>
             <point key="canvasLocation" x="366.66666666666669" y="174.77678571428569"/>
         </scene>
-        <!--Text Note View Controller-->
+        <!--Note Editing View Controller-->
         <scene sceneID="9x6-WR-3zQ">
             <objects>
-                <viewController storyboardIdentifier="TextNoteViewController" id="vHN-ll-wZF" customClass="TextNoteViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoteEditingViewController" id="vHN-ll-wZF" customClass="NoteEditingViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qaM-FJ-u3i">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

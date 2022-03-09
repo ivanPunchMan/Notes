@@ -5,6 +5,7 @@
 //  Created by Admin on 14.02.2022.
 //
 
+
 import UIKit
 
 class PopUpView: UIView {
@@ -14,7 +15,7 @@ class PopUpView: UIView {
     
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = UIColor(red: 209/255, green: 212/255, blue: 214/255, alpha: 1)
-        
+                
         setupViews()
         setupConstraints()
     }
@@ -22,6 +23,7 @@ class PopUpView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     //MARK: - Configuring and setup UI elements
     
@@ -56,10 +58,12 @@ class PopUpView: UIView {
     
     
     let boldButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton(type: .system)
+        button.frame = CGRect.zero
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: UIControl.State.normal)
         button.setImage(UIImage(named: "bold"), for: UIControl.State.normal)
+        button.tintColor = .black
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
@@ -70,12 +74,13 @@ class PopUpView: UIView {
         return button
     }()
     
-    
     let italicButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton(type: .system)
+        button.frame = CGRect.zero
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: UIControl.State.normal)
         button.setImage(UIImage(named: "italic"), for: UIControl.State.normal)
+        button.tintColor = .black
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
@@ -88,10 +93,12 @@ class PopUpView: UIView {
     
     
     let underlineButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton(type: .system)
+        button.frame = CGRect.zero
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: UIControl.State.normal)
         button.setImage(UIImage(named: "underline"), for: UIControl.State.normal)
+        button.tintColor = .black
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
@@ -103,10 +110,12 @@ class PopUpView: UIView {
     }()
     
     let strikethroughButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton(type: .system)
+        button.frame = CGRect.zero
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: UIControl.State.normal)
         button.setImage(UIImage(named: "strikethrough"), for: UIControl.State.normal)
+        button.tintColor = .black
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
@@ -116,6 +125,8 @@ class PopUpView: UIView {
         
         return button
     }()
+    
+   
     
     //MARK: - Setup UI elements
     
@@ -192,10 +203,6 @@ class PopUpView: UIView {
         self.widthAnchor.constraint(equalTo: superview.widthAnchor).isActive = true
         self.leftAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leftAnchor).isActive = true
         self.rightAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.rightAnchor).isActive = true
-        if #available(iOS 15.0, *) {
-            self.bottomAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor).isActive = true
-        } else {
-            self.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        }
+        self.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }

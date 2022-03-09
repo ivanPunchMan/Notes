@@ -2,7 +2,7 @@
 //  Notes+CoreDataProperties.swift
 //  Notes
 //
-//  Created by Admin on 05.02.2022.
+//  Created by Admin on 05.03.2022.
 //
 //
 
@@ -16,9 +16,12 @@ extension Notes {
         return NSFetchRequest<Notes>(entityName: "Notes")
     }
 
-    @NSManaged public var content: String?
+    @NSManaged public var content: NSMutableAttributedString?
     @NSManaged public var date: String?
     @NSManaged public var dateCreate: Date?
-    @NSManaged public var title: String?
+
+}
+
+extension Notes : Identifiable {
 
 }

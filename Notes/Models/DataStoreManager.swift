@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 extension UserDefaults {
     static func isFirstLaunch() -> Bool {
@@ -25,11 +26,8 @@ class DataStoreManager {
     let isFirstLaunch = UserDefaults.isFirstLaunch()
     
     
-    
     // MARK: - Core Data stack
     
-    
-        
     var fetchResultController: NSFetchedResultsController<Notes>!
         
     func configureFetchResultController() {
@@ -74,10 +72,9 @@ class DataStoreManager {
         }
     }
     
-    func saveNoteInViewContext (title: String, content: String, date: Date) {
+    func saveNoteInViewContext (content: NSMutableAttributedString, date: Date) {
         
         let notes = Notes(context: viewContext)
-        notes.title = title
         notes.content = content
         notes.dateCreate = date
         let date = date
