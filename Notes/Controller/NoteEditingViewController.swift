@@ -205,14 +205,19 @@ class NoteEditingViewController: UIViewController, UITextViewDelegate {
             
             if symbolicTraitsOfSelectedFont == UIFontDescriptor.SymbolicTraits(arrayLiteral: .traitBold, .traitItalic) {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: italicFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.italicButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+                popUpView.boldButton.backgroundColor = .white
             } else if symbolicTraitsOfSelectedFont == .traitItalic {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: italicBoldFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+                popUpView.italicButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
             } else if symbolicTraitsOfSelectedFont == .traitBold {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: normalFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.boldButton.backgroundColor = .white
             } else {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
             }
-            
         }
     }
     
@@ -232,8 +237,11 @@ class NoteEditingViewController: UIViewController, UITextViewDelegate {
 
             if valueSymbolicTraitsOfSelectedRange == 1 {
                 textNoteTextView.textStorage.addAttribute(strikethroughAttributes, value: 0, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.strikethroughButton.backgroundColor = .white
             } else {
                 textNoteTextView.textStorage.addAttribute(strikethroughAttributes, value: 1, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.strikethroughButton.backgroundColor =  #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+
             }
         }
     }
@@ -264,12 +272,18 @@ class NoteEditingViewController: UIViewController, UITextViewDelegate {
             
             if symbolicTraitsOfSelectedFont == UIFontDescriptor.SymbolicTraits(arrayLiteral: .traitBold, .traitItalic) {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+                popUpView.italicButton.backgroundColor = .white
             } else if symbolicTraitsOfSelectedFont == .traitItalic {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: normalFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.italicButton.backgroundColor = .white
             } else if symbolicTraitsOfSelectedFont == .traitBold {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: italicBoldFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+                popUpView.italicButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
             } else {
                 textNoteTextView.textStorage.addAttribute(NSAttributedString.Key.font, value: italicFont, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.italicButton.backgroundColor =  #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
             }
             
             
@@ -287,13 +301,15 @@ class NoteEditingViewController: UIViewController, UITextViewDelegate {
             
             guard NSLocationInRange(selectedRange.location, selectedRange) else { return }
             let attributesOfSelectedRange = textNoteTextView.textStorage.attributes(at: selectedRange.location, longestEffectiveRange: nil, in: selectedRange)
-                
+
             let valueSymbolicTraitsOfSelectedRange = attributesOfSelectedRange[NSAttributedString.Key.underlineStyle] as? Int ?? 0
            
             if valueSymbolicTraitsOfSelectedRange == 1 {
                 textNoteTextView.textStorage.addAttribute(underlineAttributes, value: 0, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.underlineButton.backgroundColor = .white
             } else {
                 textNoteTextView.textStorage.addAttribute(underlineAttributes, value: 1, range: NSRange(location: selectedRange.location, length: selectedRange.length))
+                popUpView.underlineButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
             }
         }
     }
@@ -303,6 +319,56 @@ class NoteEditingViewController: UIViewController, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if !isAnyButtonPressed {
             addAttributesInTextView()
+        }
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let selectedRange = textNoteTextView.selectedRange
+        var attributesOfSelectedRange = [NSAttributedString.Key : Any]()
+        var fontOfSelectedRange = UIFont()
+        
+        let rangeText = NSRange(location: 0, length: textView.textStorage.length)
+        guard NSLocationInRange(selectedRange.location - 1, rangeText) else { return }
+        
+        //Без этого условия не корректно отображает атрибуты при перемещении указателя / выделении участка текста
+        if selectedRange.length == 0 {
+            attributesOfSelectedRange = textNoteTextView.textStorage.attributes(at: selectedRange.location - 1, longestEffectiveRange: nil, in: selectedRange)
+        } else {
+            attributesOfSelectedRange = textNoteTextView.textStorage.attributes(at: selectedRange.location, longestEffectiveRange: nil, in: selectedRange)
+        }
+        
+        let underlineStyle = attributesOfSelectedRange[NSAttributedString.Key.underlineStyle] as? Int ?? 0
+        
+        if underlineStyle == 1 {
+            popUpView.underlineButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+        } else {
+            popUpView.underlineButton.backgroundColor = .white
+        }
+        
+        
+        let strikethroughStyle = attributesOfSelectedRange[NSAttributedString.Key.strikethroughStyle] as? Int ?? 0
+        
+        if strikethroughStyle == 1 {
+            popUpView.strikethroughButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+        } else {
+            popUpView.strikethroughButton.backgroundColor = .white
+        }
+        
+        fontOfSelectedRange = attributesOfSelectedRange[NSAttributedString.Key.font] as! UIFont
+        let symbolicTraitsOfSelectedFont = fontOfSelectedRange.fontDescriptor.symbolicTraits
+        
+        if symbolicTraitsOfSelectedFont == UIFontDescriptor.SymbolicTraits(arrayLiteral: .traitBold, .traitItalic) {
+            popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+            popUpView.italicButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+        } else if symbolicTraitsOfSelectedFont == .traitItalic {
+            popUpView.italicButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+            popUpView.boldButton.backgroundColor = .white
+        } else if symbolicTraitsOfSelectedFont == .traitBold {
+            popUpView.boldButton.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+            popUpView.italicButton.backgroundColor = .white
+        } else {
+            popUpView.boldButton.backgroundColor = .white
+            popUpView.italicButton.backgroundColor = .white
         }
     }
 }
