@@ -17,7 +17,6 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
     private func getNoteWhenFirstLaunchApp() {
         if dataStoreManager.isFirstLaunch {
             dataStoreManager.saveNoteInViewContext(content: getFirstNote(), date: Date())
-            print("firstLaunch")
             dataStoreManager.saveContext()
         }
     }
@@ -58,6 +57,28 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
         return contentNote
     }
     
+    private func getNoteTitle(text: NSAttributedString) -> String {
+        var firstParagraph: String
+        if let endIndexOfFirstParagraph = text.string.firstIndex(of: "\n") {
+            firstParagraph = String(text.string[..<endIndexOfFirstParagraph])
+        } else {
+            firstParagraph = text.string
+        }
+        return firstParagraph
+    }
+    
+    //Нужен для выделения содержания - им является текст после первого параграфа заметки
+    private func getNoteContent(text: NSAttributedString) -> String {
+        var contentNote: String
+        if let endIndexOfFirstParagraph = text.string.firstIndex(of: "\n") {
+            let firstIndexOfContent = text.string.index(endIndexOfFirstParagraph, offsetBy: 1)
+            contentNote = String(text.string[firstIndexOfContent...])
+        } else {
+            contentNote = ""
+        }
+        return contentNote
+    }
+    
     func editNoteCell(content: NSMutableAttributedString, date: Date, indexPath: IndexPath) {
         let _ = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as! NoteCell
         let note = dataStoreManager.fetchResultController.object(at: indexPath)
@@ -94,7 +115,6 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
             }
         }
         
-        
         noteEditingViewController?.isOldNote = false
         navigationController?.pushViewController(noteEditingViewController!, animated: true)
     }
@@ -112,7 +132,19 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
         }
     }
 
-    // MARK: - Table view data source
+    //MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actionDelete = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
+            let note = self.dataStoreManager.fetchResultController.object(at: indexPath)
+            self.dataStoreManager.viewContext.delete(note)
+            self.dataStoreManager.saveContext()
+        }
+        let actions = UISwipeActionsConfiguration(actions: [actionDelete])
+        return actions
+    }
+    
+    //MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -128,28 +160,6 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
         return getConfigurateNotesCell(for: indexPath)
     }
     
-    private func getNoteTitle(text: NSAttributedString) -> String {
-        var firstParagraph: String
-        if let endIndexOfFirstParagraph = text.string.firstIndex(of: "\n") {
-            firstParagraph = String(text.string[..<endIndexOfFirstParagraph])
-        } else {
-            firstParagraph = text.string
-        }
-        return firstParagraph
-    }
-    
-    //Нужен для выделения содержания - им является текст после первого параграфа заметки
-    private func getNoteContent(text: NSAttributedString) -> String {
-        var contentNote: String
-        if let endIndexOfFirstParagraph = text.string.firstIndex(of: "\n") {
-            let firstIndexOfContent = text.string.index(endIndexOfFirstParagraph, offsetBy: 1)
-            contentNote = String(text.string[firstIndexOfContent...])
-        } else {
-            contentNote = ""
-        }
-        return contentNote
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let note = dataStoreManager.fetchResultController.object(at: indexPath)
         let noteEditingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoteEditingViewController") as? NoteEditingViewController
@@ -163,11 +173,5 @@ class NotesListController: UITableViewController, NSFetchedResultsControllerDele
             }
         }
         navigationController?.pushViewController(noteEditingViewController!, animated: true)
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let note = dataStoreManager.fetchResultController.object(at: indexPath)
-        dataStoreManager.viewContext.delete(note)
-        dataStoreManager.saveContext()
     }
 }
